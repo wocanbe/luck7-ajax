@@ -1,0 +1,41 @@
+{
+  "name": "luck7-ajax",
+  "private": true,
+  "author": "584069777@qq.com",
+  "license": "ISC",
+  "version": "0.1.0",
+  "keywords": [
+    "ajax",
+    "axios",
+    "project"
+  ],
+  "description": "A tool to manage AJAX of project",
+  "files": [
+    "dist"
+  ],
+  "main": "dist/index.umd.js",
+  "scripts": {
+    "build": "rollup -c"
+  },
+  "peerDependencies": {
+    "axios": "^0.16.2"
+  },
+  "devDependencies": {
+    "fs-extra": "^6.0.1",
+    "lodash": "^4.17.10",
+    "rollup": "^0.66.0",
+    "rollup-plugin-babel": "^3.0.4"
+  },
+  "engines": {
+    "node": ">=8"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wocanbe/luck7-ajax.git"
+  },
+  "bugs": {
+    "url": "https://github.com/wocanbe/luck7-ajax.git/issues"
+  },
+  "homepage": "https://github.com/wocanbe/luck7-ajax.git#readme"
+
+}
