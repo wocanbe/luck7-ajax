@@ -1,23 +1,17 @@
 import lang from './lang'
-function preCheckItem (localConfig, key) {
-  if (localConfig.method) {
-    const method = localConfig.method.toUpperCase()
-    if (['GET', 'POST', 'PUT', 'DELETE'].indexOf(method) === -1) {
-      throw new Error(lang.methodError.replace('#apiName#', key).replace('#method#', localConfig.method))
-    } else {
-      localConfig.method = method
-    }
-  } else {
-    localConfig['method'] = 'POST'
+function checkAllowMethod (method, key) {
+  if (['GET', 'POST', 'PUT', 'DELETE', 'PATCH'].indexOf(method.toUpperCase()) === -1) {
+    throw new Error(lang.methodError.replace('#apiName#', key).replace('#method#', method))
   }
-  if (!localConfig.url) {
-    throw new Error(lang.urlError.replace('#apiName#', key))
-  }
+}
+function checkItem (localConfig, key) {
+  if (localConfig.method) checkAllowMethod(localConfig.method, key)
+  if (!localConfig.url) throw new Error(lang.urlError.replace('#apiName#', key))
   return localConfig
 }
-function preCheck (list) {
+function checkList (list) {
   for (const key in list) {
-    preCheckItem(list[key], key)
+    checkItem(list[key], key)
   }
   return list
 }
@@ -41,4 +35,4 @@ function prefetch (url, params, isCros) {
   }
   return baseURL + url
 }
-export {preCheck, preCheckItem, prefetch}
+export {checkList, checkItem, prefetch, checkAllowMethod}

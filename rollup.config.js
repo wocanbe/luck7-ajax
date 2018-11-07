@@ -1,4 +1,5 @@
 import babel from 'rollup-plugin-babel'
+import {uglify} from "rollup-plugin-uglify"
 
 const globals = {
   'axios': 'axios',
@@ -29,7 +30,7 @@ export default {
     ],
     plugins: [require.resolve('babel-plugin-transform-runtime')],
     'comments': true
-  })],
+  }), uglify()],
   external: (id) => {
     if (/^babel-runtime\/.*$/.test(id)) {
       return true
