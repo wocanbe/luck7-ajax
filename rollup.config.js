@@ -1,19 +1,22 @@
 import babel from 'rollup-plugin-babel'
-import {uglify} from "rollup-plugin-uglify"
+import {uglify} from 'rollup-plugin-uglify'
 
 const globals = {
   'axios': 'axios',
+  'flyio/dist/npm/fly': 'Fly',
   'babel-runtime/core-js/promise': 'BabelCore.Promise',
+  'babel-runtime/core-js/symbol': 'BabelCore.symbol',
   'babel-runtime/helpers/classCallCheck': 'BabelHelpers.classCallCheck',
   'babel-runtime/helpers/createClass': 'BabelHelpers.createClass',
+  'lodash/isArray': 'isArray',
   'lodash/isFunction': 'isFunction',
-  'lodash/isBoolean': 'isBoolean',
   'lodash/isString': 'isString',
   'lodash/isObject': 'isObject',
+  'lodash/isBoolean': 'isBoolean',
   'lodash/extend': 'extend'
 }
 export default {
-  input: 'src/ajax.js',
+  input: 'src/Ajax.js',
   output: {
     file: 'dist/index.umd.js',
     format: 'umd',
@@ -34,7 +37,11 @@ export default {
   external: (id) => {
     if (/^babel-runtime\/.*$/.test(id)) {
       return true
-    } else if (/^(axios|lodash\/.*)$/.test(id)) {
+    } else if (/^lodash\/.*$/.test(id)) {
+      return true
+    } else if (/^flyio\/dist\/npm\/\w+$/.test(id)) {
+      return true
+    } else if (id === 'axios') {
       return true
     }
   }

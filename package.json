@@ -2,7 +2,7 @@
   "name": "luck7-ajax",
   "author": "584069777@qq.com",
   "license": "ISC",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "keywords": [
     "ajax",
     "axios",
@@ -17,10 +17,13 @@
     "build": "rollup -c"
   },
   "peerDependencies": {
-    "axios": "^0.16.2",
+    "flyio": "0.6.4",
     "lodash": "^4.17.10"
   },
   "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-env": "^1.7.0",
     "fs-extra": "^6.0.1",
     "rollup": "^0.66.0",
     "rollup-pluginutils": "^1.5.2",
