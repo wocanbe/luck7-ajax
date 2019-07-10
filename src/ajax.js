@@ -21,7 +21,7 @@ function single (apis, methods, isStrict, instance, apiName, params) {
     if (isFunction(filterObj)) {
       sucessFun = filterObj
     } else {
-      if (filterObj.request) reqConfig.data = filterObj.request(reqConfig.data)
+      if (filterObj.request) filterObj.request(reqConfig)
       if (filterObj.response) sucessFun = filterObj.response
       if (filterObj.error) errorFun = filterObj.error
     }
@@ -44,7 +44,17 @@ function single (apis, methods, isStrict, instance, apiName, params) {
   })
 }
 class Ajax {
-  constructor (apiList, ajaxConfigs = {}, configs = {}, apiMethods = {}) {
+  constructor () {
+    if (arguments[0] instanceof Promise) {
+      arguments[0].then(res => {
+        this.init(res, arguments[1], arguments[2], arguments[3])
+      })
+    } else {
+      this.init(...arguments)
+      if (arguments[0].init) this.do('init', {})
+    }
+  }
+  init (apiList, ajaxConfigs = {}, configs = {}, apiMethods = {}) {
     if (isObject(configs.lang)) {
       for (const key in configs.lang) {
         if (defaultLang[key]) defaultLang[key] = configs.lang[key]

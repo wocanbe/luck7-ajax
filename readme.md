@@ -125,10 +125,10 @@ const methods = {
   // _跟其他的method配置(如login)不能同时生效
   // 为什么是function？为了实现一些情况下request和response共用变量，并且每次请求该变量都会变化的情况，如对数据进行加解密的情况
     return {
-      request (data) {
+      request (req) {
+        const {data} = req
         const userid = sessionStorage.getItem('userid')
-        const token = sessionStorage.getItem('token')
-        const backData = {userid, token}
+        const backData = {userid}
         for (const k in data) {
           let v = data[k]
           if (typeof v === 'string' && v.substr(0, 5) === 'vuex.') { // 处理vuex数据
@@ -137,7 +137,9 @@ const methods = {
           }
           backData[k] = v
         }
-        return backData
+        const token = sessionStorage.getItem('token')
+        req.options['headers'] = {'Access-token': token}
+        req.data = backData
       },
       response (res) {
         if (res.code !== 0) {
