@@ -38,7 +38,13 @@ function prefetch (url, params, isCros) {
   urlRegx = /:(\w+)/
   let urlPat = url.match(urlRegx)
   while (urlPat !== null) {
-    if (params.hasOwnProperty(urlPat[1])) {
+    if (params instanceof FormData) {
+      if (params.has(urlPat[1])) {
+        url = url.replace(urlPat[0], params.get(urlPat[1]))
+      } else {
+        throw new Error(urlPat[1])
+      }
+    } else if (params.hasOwnProperty(urlPat[1])) {
       url = url.replace(urlPat[0], params[urlPat[1]])
     } else {
       throw new Error(urlPat[1])
@@ -60,21 +66,21 @@ function getAjaxConfig (apiName, params, apiConfig, strictMode, defaultMethod) {
     else return new Error(lang.typeError)
   }
   const reqConfig = {
-    url: localConfig.url,
-    data: extend({}, localConfig.data, params),
-    options: {}
+    url: localConfig.url
   }
-  reqConfig.options = extend({}, localConfig.options, {
+  reqConfig.options = extend({headers: {}}, localConfig.options, {
     method: localConfig.method || defaultMethod
   })
-  if (isObject(params)) {
-    try {
-      reqConfig.url = prefetch(localConfig.url, params, localConfig.isCros)
-    } catch (e) {
-      return new Error(lang.paramError.replace('#param#', e.message))
-    }
+  let data = params
+  if (params instanceof FormData) {
+    reqConfig.options.headers['Content-Type'] = 'multipart/form-data'
+  } else data = extend({}, localConfig.data, params)
+  try {
+    reqConfig.url = prefetch(localConfig.url, params, localConfig.isCros)
+  } catch (e) {
+    return new Error(lang.paramError.replace('#param#', e.message))
   }
-  return reqConfig
+  return [reqConfig, data]
 }
 
 export {checkList, checkAllowMethod, getAjaxConfig}

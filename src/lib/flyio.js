@@ -11,8 +11,8 @@ class FlyAjax {
     this.config = config
     this.interceptors = ajax.interceptors
   }
-  request (reqConfig) {
-    return this.instance.request(reqConfig.url, reqConfig.data, reqConfig.options)
+  request (reqConfig, data) {
+    return this.instance.request(reqConfig.url, data, reqConfig.options)
   }
 }
 export default FlyAjax

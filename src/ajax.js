@@ -26,7 +26,7 @@ function single (apis, methods, isStrict, instance, apiName, params) {
       if (filterObj.error) errorFun = filterObj.error
     }
   }
-  return instance.request(reqConfig).then((res) => {
+  return instance.request(reqConfig[0], reqConfig[1]).then((res) => {
     if (res.status === 200) {
       try {
         const data = sucessFun ? sucessFun(res.data) : res.data
