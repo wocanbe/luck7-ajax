@@ -21,9 +21,16 @@ function single (apis, methods, isStrict, instance, apiName, params) {
     if (isFunction(filterObj)) {
       sucessFun = filterObj
     } else {
-      if (filterObj.request) filterObj.request(reqConfig)
-      if (filterObj.response) sucessFun = filterObj.response
       if (filterObj.error) errorFun = filterObj.error
+      if (filterObj.request) {
+        try {
+          filterObj.request(reqConfig)
+        } catch (e) {
+          if (errorFun) return errorFun(e)
+          else return Promise.reject(e)
+        }
+      }
+      if (filterObj.response) sucessFun = filterObj.response
     }
   }
   return instance.request(reqConfig[0], reqConfig[1]).then((res) => {
