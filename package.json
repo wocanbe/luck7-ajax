@@ -2,7 +2,7 @@
   "name": "luck7-ajax",
   "author": "584069777@qq.com",
   "license": "ISC",
-  "version": "0.2.3",
+  "version": "0.3.0",
   "keywords": [
     "ajax",
     "axios",
@@ -17,7 +17,7 @@
     "build": "rollup -c"
   },
   "peerDependencies": {
-    "flyio": "0.6.4",
+    "axios": "0.20.0",
     "lodash": "^4.17.10"
   },
   "devDependencies": {

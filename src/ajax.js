@@ -5,7 +5,7 @@ import isBoolean from 'lodash/isBoolean'
 import extend from 'lodash/extend'
 import defaultLang from './lib/lang'
 import {checkList, checkAllowMethod, getAjaxConfig} from './lib/tools'
-import LyAjax from './lib/flyio'
+import LyAjax from './lib/axios'
 
 const ajaxList = Symbol('api')
 const methodList = Symbol('method')

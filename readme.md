@@ -70,22 +70,9 @@ ajax.do(apiName, params) // 没有请求参数的时候，params可以不写
   ```
 ## 请求配置项
 
-默认使用flyio，跟flyio的请求配置完全一致，此时支持如下配置选项
+支持所有axios支持的配置，详情参考[axios](https://github.com/mzabriskie/axios) 的"Request Config"
 
-```javascript
-{
-  headers: {}, // http请求头，
-  baseURL: "", // 请求基地址
-  timeout: 0, // 超时时间，为0时则无超时限制
-  // 是否自动将Content-Type为“application/json”的响应数据转化为JSON对象，默认为true    
-  parseJson: true,
-  params: {}, // 默认公共的url get参数     
-  withCredentials: false // 跨域时是否发送cookie
-}
-```
  - 请求配置项支持**实例级配置**和**单次请求配置**
-
-~~使用axios时，将支持所有axios支持的配置，详情参考[axios](https://github.com/mzabriskie/axios) 的"Request Config"~~
 
 ## 项目使用实例
 

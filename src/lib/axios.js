@@ -8,12 +8,12 @@ class axiosAjax {
     this.interceptors = this.instance.interceptors
     // if (config.credentials) instance.withCredentials = true
   }
-  request (reqConfig) {
+  request (reqConfig, data) {
     const axiosConfig = extend({}, reqConfig.options, {url: reqConfig.url})
     if (reqConfig.options.method === 'GET') {
-      axiosConfig['params'] = reqConfig.data
+      axiosConfig['params'] = data
     } else {
-      axiosConfig['data'] = reqConfig.data
+      axiosConfig['data'] = data
     }
     return this.instance.request(axiosConfig)
   }
