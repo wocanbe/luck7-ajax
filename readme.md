@@ -22,7 +22,7 @@ ajax.do(apiName, params) // 没有请求参数的时候，params可以不写
 
  * commonConfigs
 
-  Object类型，对ajax请求的配置(如headers、timeout等)，来自flyio框架，参考``请求配置项``，默认值如下
+  Object类型，对ajax请求的配置(如headers、timeout等)，来自axios框架，参考``请求配置项``，默认值如下
   ```javascript
   {
     method: 'POST',
@@ -113,7 +113,9 @@ const methods = {
   // 为什么是function？为了实现一些情况下request和response共用变量，并且每次请求该变量都会变化的情况，如对数据进行加解密的情况
     return {
       request (req) {
-        const {data} = req
+        const token = sessionStorage.getItem('token')
+        req[0].options['headers'] = {'Access-token': token}
+        const data = req[1]
         const userid = sessionStorage.getItem('userid')
         const backData = {userid}
         for (const k in data) {
@@ -124,9 +126,8 @@ const methods = {
           }
           backData[k] = v
         }
-        const token = sessionStorage.getItem('token')
-        req.options['headers'] = {'Access-token': token}
-        req.data = backData
+        req[1] = backData
+        return req
       },
       response (res) {
         if (res.code !== 0) {

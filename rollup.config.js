@@ -1,5 +1,6 @@
 import babel from 'rollup-plugin-babel'
-import {uglify} from 'rollup-plugin-uglify'
+import {terser} from 'rollup-plugin-terser'
+import copy from 'rollup-plugin-copy'
 
 const globals = {
   'axios': 'axios',
@@ -25,15 +26,23 @@ export default {
     banner: '/**\n* Copyright 584069777@qq.com 2018.\n*/'
   },
   // plugins: [babel({runtimeHelpers: true})],
-  plugins: [babel({
-    babelrc: false,
-    runtimeHelpers: true,
-    'presets': [
-      [require.resolve('babel-preset-env'), {modules: false}]
-    ],
-    plugins: [require.resolve('babel-plugin-transform-runtime')],
-    'comments': true
-  }), uglify()],
+  plugins: [
+    babel({
+      babelrc: false,
+      runtimeHelpers: true,
+      'presets': [
+        [require.resolve('babel-preset-env'), {modules: false}]
+      ],
+      plugins: [require.resolve('babel-plugin-transform-runtime')],
+      'comments': true
+    }),
+    terser(),
+    copy({
+      targets: [
+        { src: 'src/Ajax.d.ts', dest: 'dist', rename: 'index.d.ts' }
+      ]
+    })
+],
   external: (id) => {
     if (/^babel-runtime\/.*$/.test(id)) {
       return true
